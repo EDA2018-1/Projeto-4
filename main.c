@@ -155,3 +155,62 @@ void emergencia(FILA *fila, int *desvio) {
     *desvio = 1;
   }
 }
+
+void rolaEvento(Fila *fila, Pista pistas[3]){
+  Voo *aux,*anterior = NULL;
+
+  for(aux = fila->inicio;aux != NULL;aux = aux->prox){
+    if(aux->tipo == 'D'){
+
+      if(pistas[0].evento_tempo == 0){
+        pistas[0].ocupado = aux;
+        pistas[0].evento_tempo = 2*UnTempo;
+
+        if(anterior == NULL)
+          fila->inicio = aux->prox;
+        else
+          anterior->prox = aux->prox;
+      }
+      else if(pistas[1].evento_tempo == 0){
+        pistas[1].ocupado = aux;
+        pistas[1].evento_tempo = 2*UnTempo;
+
+        if(anterior == NULL)
+          fila->inicio = aux->prox;
+        else
+          anterior->prox = aux->prox;
+      }
+      else if(pistas[2].evento_tempo == 0){
+        pistas[2].ocupado = aux;
+        pistas[2].evento_tempo = 2*UnTempo;
+        if(anterior == NULL)
+          fila->inicio = aux->prox;
+        else
+          anterior->prox = aux->prox;
+      }
+    }
+    else{
+
+      if(pistas[0].evento_tempo == 0){
+        pistas[0].ocupado = aux;
+        pistas[0].evento_tempo = 3*UnTempo;
+
+        if(anterior == NULL)
+          fila->inicio = aux->prox;
+        else
+          anterior->prox = aux->prox;
+      }
+      else if(pistas[1].evento_tempo == 0){
+        pistas[1].ocupado = aux;
+        pistas[1].evento_tempo = 3*UnTempo;
+
+        if(anterior == NULL)
+          fila->inicio = aux->prox;
+        else
+          anterior->prox = aux->prox;
+      }
+      aux->combA = aux->combA - 1;
+    }
+    anterior = aux;
+  }
+}
