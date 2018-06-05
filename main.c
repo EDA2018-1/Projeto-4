@@ -78,32 +78,6 @@ void nVoos(int *n_voos,int *n_aproximacoes,int *n_decolagens){
 
 }
 
-void carrega_fila (Fila *fila, int n_voos, int n_aproximacoes, int n_decolagens, char codigos[][6]){
-  Voo voo[n_voos];
-
-  for (int i = 0; i < n_aproximacoes; i++) {
-    strcpy(voo[i].codigo, codigos[i]);
-    voo[i].evento = 'A';
-    voo[i].combA = rand() % 12;
-    voo[i].prox = NULL;
-  }
-  for (int i = n_aproximacoes; i < n_aproximacoes+n_decolagens; i++) {
-    strcpy(voo[i].codigo, codigos[i]);
-    voo[i].evento = 'D'
-    voo[i].combA = -1;
-    voo[i].prox = NULL;
-  }
-  randomizar_voos(voo, n_voos);
-  for (int i = 0; i < n_voos; i++) {
-    Voo *novoVoo = (Voo*)malloc(sizeof(Voo));
-    strcpy(novoVoo->codigo, voo[i].codigo);
-    novoVoo->evento = voo[i].evento;
-    novoVoo->combA = voo[i].combA;
-    novoVoo->prox = NULL;
-    insere(fila, novoVoo);
-  }
-}
-
 void randomizar_voos(Voo *vetor, int n_voos) {
   int i, random;
   Voo aux;
@@ -124,93 +98,5 @@ void insere(Fila *fila, Voo *voo) {
   } else {
     fila->fim->prox = voo;
     fila->fim = voo;
-  }
-}
-
-void reduz_combustivel(Fila *fila) {
-    Voo *aux;
-    for (aux = fila->inicio; aux != NULL; aux = aux->prox) {
-      if (aux->evento == 'P') {
-        aux->combA = aux->combA - 1;
-      }
-    }
-}
-
-void emergencia(FILA *fila, int *desvio) {
-  Voo *aux, *ant = NULL;
-  int n_emergencias = 0;
-  for (aux = fila->inicio; aux != NULL; aux = aux->prox) {
-    if (aux->combA == '0') {
-      if (aux != fila->inicio) {
-        ant->prox = aux->prox;
-        aux->prox = fila->inicio;
-        fila->inicio = aux;
-      }
-      n_emergencias++;
-    }
-    ant = aux;
-  }
-  if(n_emergencias >= 3){
-    printf("ALERTA GERAL DE DESVIO DE AERONAVE\n");
-    *desvio = 1;
-  }
-}
-
-void rolaEvento(Fila *fila, Pista pistas[3]){
-  Voo *aux,*anterior = NULL;
-
-  for(aux = fila->inicio;aux != NULL;aux = aux->prox){
-    if(aux->tipo == 'D'){
-
-      if(pistas[0].evento_tempo == 0){
-        pistas[0].ocupado = aux;
-        pistas[0].evento_tempo = 2*UnTempo;
-
-        if(anterior == NULL)
-          fila->inicio = aux->prox;
-        else
-          anterior->prox = aux->prox;
-      }
-      else if(pistas[1].evento_tempo == 0){
-        pistas[1].ocupado = aux;
-        pistas[1].evento_tempo = 2*UnTempo;
-
-        if(anterior == NULL)
-          fila->inicio = aux->prox;
-        else
-          anterior->prox = aux->prox;
-      }
-      else if(pistas[2].evento_tempo == 0){
-        pistas[2].ocupado = aux;
-        pistas[2].evento_tempo = 2*UnTempo;
-        if(anterior == NULL)
-          fila->inicio = aux->prox;
-        else
-          anterior->prox = aux->prox;
-      }
-    }
-    else{
-
-      if(pistas[0].evento_tempo == 0){
-        pistas[0].ocupado = aux;
-        pistas[0].evento_tempo = 3*UnTempo;
-
-        if(anterior == NULL)
-          fila->inicio = aux->prox;
-        else
-          anterior->prox = aux->prox;
-      }
-      else if(pistas[1].evento_tempo == 0){
-        pistas[1].ocupado = aux;
-        pistas[1].evento_tempo = 3*UnTempo;
-
-        if(anterior == NULL)
-          fila->inicio = aux->prox;
-        else
-          anterior->prox = aux->prox;
-      }
-      aux->combA = aux->combA - 1;
-    }
-    anterior = aux;
   }
 }
