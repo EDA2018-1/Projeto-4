@@ -57,7 +57,7 @@ void horaInicial():
 
 /* esta função gera um numero de voos aleátorios entre 20 e 64 e numeros
    de aproximações e decolagens entre 10 e 32*/
-void nVoos(int *n_voos,int *n_aproximacoes,int *n_decolagen){
+void nVoos(int *n_voos,int *n_aproximacoes,int *n_decolagens){
 
   srand(time(NULL));
   *n_voos = rand() % 64;
@@ -76,4 +76,30 @@ void nVoos(int *n_voos,int *n_aproximacoes,int *n_decolagen){
 
   *n_decolagens = *n_voos - *n_aproximacoes;
 
+}
+
+void carrega_fila (Fila *fila, int n_voos, int n_aproximacoes, int n_decolagens, char codigos[][6]){
+  Voo voo[n_voos];
+
+  for (int i = 0; i < n_aproximacoes; i++) {
+    strcpy(voo[i].codigo, codigos[i]);
+    voo[i].evento = 'A';
+    voo[i].combA = rand() % 12;
+    voo[i].prox = NULL;
   }
+  for (int i = n_aproximacoes; i < n_aproximacoes+n_decolagens; i++) {
+    strcpy(voo[i].codigo, codigos[i]);
+    voo[i].evento = 'D'
+    voo[i].combA = -1;
+    voo[i].prox = NULL;
+  }
+  randomizar_voos(voo, n_voos);
+  for (int i = 0; i < n_voos; i++) {
+    Voo *novoVoo = (Voo*)malloc(sizeof(Voo));
+    strcpy(novoVoo->codigo, voo[i].codigo);
+    novoVoo->evento = voo[i].evento;
+    novoVoo->combA = voo[i].combA;
+    novoVoo->prox = NULL;
+    insere(fila, novoVoo);
+  }
+}
