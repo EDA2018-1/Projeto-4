@@ -135,3 +135,23 @@ void reduz_combustivel(Fila *fila) {
       }
     }
 }
+
+void emergencia(FILA *fila, int *desvio) {
+  Voo *aux, *ant = NULL;
+  int n_emergencias = 0;
+  for (aux = fila->inicio; aux != NULL; aux = aux->prox) {
+    if (aux->combA == '0') {
+      if (aux != fila->inicio) {
+        ant->prox = aux->prox;
+        aux->prox = fila->inicio;
+        fila->inicio = aux;
+      }
+      n_emergencias++;
+    }
+    ant = aux;
+  }
+  if(n_emergencias >= 3){
+    printf("ALERTA GERAL DE DESVIO DE AERONAVE\n");
+    *desvio = 1;
+  }
+}
