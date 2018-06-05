@@ -103,3 +103,15 @@ void carrega_fila (Fila *fila, int n_voos, int n_aproximacoes, int n_decolagens,
     insere(fila, novoVoo);
   }
 }
+
+void randomizar_voos(Voo *vetor, int n_voos) {
+  int i, random;
+  Voo aux;
+  srand(time(NULL));
+  for (int i = 0; i < n_voos; i++) {
+    random = rand % n_voos;
+    aux = vetor[i];
+    vetor[i] = vetor[random];
+    vetor[random] = aux;
+  }
+}
