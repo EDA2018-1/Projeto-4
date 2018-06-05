@@ -115,3 +115,14 @@ void randomizar_voos(Voo *vetor, int n_voos) {
     vetor[random] = aux;
   }
 }
+
+void insere(Fila *fila, Voo *voo) {
+  if (fila->inicio == NULL) {
+    fila->inicio = voo;
+    fila->fim = voo;
+    voo->prox = NULL;
+  } else {
+    fila->fim->prox = voo;
+    fila->fim = voo;
+  }
+}
