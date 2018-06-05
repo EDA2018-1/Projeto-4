@@ -126,3 +126,12 @@ void insere(Fila *fila, Voo *voo) {
     fila->fim = voo;
   }
 }
+
+void reduz_combustivel(Fila *fila) {
+    Voo *aux;
+    for (aux = fila->inicio; aux != NULL; aux = aux->prox) {
+      if (aux->evento == 'P') {
+        aux->combA = aux->combA - 1;
+      }
+    }
+}
